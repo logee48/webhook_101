@@ -53,6 +53,8 @@ app.get('/', (req, res) => {
 app.post('/', async (req, res) => {
   const entry = req.body.entry?.[0];
   const changes = entry?.changes?.[0];
+  const value = changes?.value;
+  const metadata = value?.metadata;
   const message = changes?.value?.messages?.[0];
   if (!message) {
     return res.sendStatus(200);
@@ -72,7 +74,7 @@ app.post('/', async (req, res) => {
 
   // Humane, brand-aligned quick replies
   if (msgBody === 'hi' || msgBody === 'hello') {
-    replyText = `Namaste from OrangUtan Organics 🌱\nPerched at 2,300 m in the Gangotri Valley, we're here to share the true taste of the Himalayas. How can we brighten your day?`;
+    replyText = `Namaste from OrangUtan Organics 🌱\nPerched at 2,300 mtr in the Gangotri Valley, we're here to share the true taste of the Himalayas. How can we brighten your day?`;
   } else if (msgBody.includes('how are you')) {
     replyText = `We're flourishing like the alpine blooms at Gangotri! 😊 How can we assist you today?`;
   } else if (msgBody === 'fine') {
