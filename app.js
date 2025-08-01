@@ -60,7 +60,13 @@ app.post('/', async (req, res) => {
 
   const from = message.from;
   const msgBody = message.text?.body?.toLowerCase().trim() || '';
-  console.log(`Received from ${from}: "${msgBody}"`);
+  const phoneIdFromMessage = metadata?.phone_number_id;
+  if (phoneIdFromMessage !== phoneNumberId) {
+    console.log(`Ignoring message sent to different number: ${phoneIdFromMessage}`);
+    return res.sendStatus(200);
+  }
+
+  console.log(`Received from ${from} on ${phoneIdFromMessage}: "${msgBody}"`);
 
   let replyText = '';
 
